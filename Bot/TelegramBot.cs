@@ -43,6 +43,10 @@ public class TelegramBot
                 {
                     await botClient.SendTextMessageAsync(message.Chat, "Инициализация пройдена");
                 }
+                else
+                {
+                    await botClient.SendTextMessageAsync(message.Chat, "Неизвестная команда");
+                }
             }
         }
     }
