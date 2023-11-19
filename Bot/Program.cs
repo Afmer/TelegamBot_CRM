@@ -7,7 +7,8 @@ public static class Program
     {
         var config = new ConfigurationService();
         var innApi = new DaDataService(config.DaDataConfiguration);
-        var bot = new TelegramBot(config.TelegramBotConfiguration, innApi);
+        var stateMachine = new StateMachineService();
+        var bot = new TelegramBot(config.TelegramBotConfiguration, innApi, stateMachine);
         Console.ReadLine();
     }
 }
