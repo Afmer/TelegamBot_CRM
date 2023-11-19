@@ -2,12 +2,15 @@ using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using TelegramBot_CRM.Architecture.Configurations;
+using TelegramBot_CRM.Architecture.Interfaces;
 namespace TelegramBot_CRM;
 public class TelegramBot
 {
     private readonly ITelegramBotClient bot;
-    public TelegramBot(TelegramBotConfiguration configuration)
+    private readonly IInnApi _innApi;
+    public TelegramBot(TelegramBotConfiguration configuration, IInnApi innApi)
     {
+        _innApi = innApi;
         bot = new TelegramBotClient(configuration.Token);
         try
         {
@@ -37,11 +40,24 @@ public class TelegramBot
         if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
         {
             var message = update.Message;
-            if (message != null && message.Text != null)
+            if (message != null && message.Text != null && message.Text != "")
             {
-                if(message.Text == "/start")
+                var words = message.Text.Split(' ');
+                if(words[0] == "/start")
                 {
                     await botClient.SendTextMessageAsync(message.Chat, "Инициализация пройдена");
+                }
+                else if(words[0] == "/inn")
+                {
+                    var text = "";
+                    for(int i = 1; i < words.Length; i++)
+                    {
+                        var client = await _innApi.GetUserByInn(words[i]);
+                        text += $"{client.Client!.Name}\n{client.Client!.Address}";
+                        if(i + 1 < words.Length)
+                            text += "\n\n";
+                    }
+                    await botClient.SendTextMessageAsync(message.Chat, text);
                 }
                 else
                 {

@@ -427,3 +427,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,dotnetcore
 
 /Bot/Configs/TelegramBotConfiguration.json
+/Bot/Configs/DaDataConfig.json
