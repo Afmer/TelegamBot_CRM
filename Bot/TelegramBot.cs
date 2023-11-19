@@ -74,6 +74,10 @@ public class TelegramBot
         {
             await HelpCommand(botClient, message);
         }
+        else if(words[0] == "/hello")
+        {
+            await HelloCommand(botClient, message);
+        }
         else
         {
             await botClient.SendTextMessageAsync(message.Chat, "Неизвестная команда");
@@ -125,6 +129,13 @@ public class TelegramBot
     {
         string text = "Введите \"/inn [ИНН 1] [ИНН 2] ... [ИНН n]\", чтобы получить компании, которым принадлежат введенные вами ИНН" +
             "\n\nВведите \"/last\", чтобы выполнить последнюю введенную вами команду";
+        await botClient.SendTextMessageAsync(message.Chat, text);
+    }
+    private async Task HelloCommand(ITelegramBotClient botClient, Message message)
+    {
+        string text = "Имя моего создателя: Гребенюк Сергей" +
+            "\nПочта создателя: afmerlord@gmail.com" +
+            "\nGithub создателя: https://github.com/Afmer";
         await botClient.SendTextMessageAsync(message.Chat, text);
     }
 }
