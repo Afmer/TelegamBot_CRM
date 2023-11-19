@@ -128,7 +128,8 @@ public class TelegramBot
     private async Task HelpCommand(ITelegramBotClient botClient, Message message)
     {
         string text = "Введите \"/inn [ИНН 1] [ИНН 2] ... [ИНН n]\", чтобы получить компании, которым принадлежат введенные вами ИНН" +
-            "\n\nВведите \"/last\", чтобы выполнить последнюю введенную вами команду";
+            "\n\nВведите \"/last\", чтобы выполнить последнюю введенную вами команду" +
+            "\n\nВведите /hello для получения контактной информации";
         await botClient.SendTextMessageAsync(message.Chat, text);
     }
     private async Task HelloCommand(ITelegramBotClient botClient, Message message)
