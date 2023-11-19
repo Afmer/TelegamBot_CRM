@@ -54,7 +54,7 @@ public class TelegramBot
         Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
         return Task.CompletedTask;
     }
-    private async Task CommandHandler(string command, ITelegramBotClient botClient, Message message, bool isLast)
+    private async Task CommandHandler(string command, ITelegramBotClient botClient, Message message, bool isLastCommandExecute)
     {
         bool unknownCommand = false;
         var words = command.Split(' ');
@@ -98,7 +98,7 @@ public class TelegramBot
             await botClient.SendTextMessageAsync(message.Chat, "Неизвестная команда");
             unknownCommand = true;
         }
-        if(words[0] != "/last" && !unknownCommand && !isLast)
+        if(words[0] != "/last" && !unknownCommand && !isLastCommandExecute)
         {
             string username = message.From!.Username!;
             _stateMachine.SetLastMessageState(username, message.Text!);
