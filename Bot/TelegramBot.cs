@@ -2,6 +2,7 @@ using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using TelegramBot_CRM.Architecture.Configurations;
+using TelegramBot_CRM.Architecture.Enums;
 using TelegramBot_CRM.Architecture.Interfaces;
 namespace TelegramBot_CRM;
 public class TelegramBot
@@ -53,10 +54,21 @@ public class TelegramBot
                     for(int i = 1; i < words.Length; i++)
                     {
                         var client = await _innApi.GetUserByInn(words[i]);
-                        text += $"{client.Client!.Name}\n{client.Client!.Address}";
+                        if(client.Status == GetUserByInnStatus.InvalidInn)
+                            text += $"{words[i]} не является ИНН";
+                        else if(client.Status == GetUserByInnStatus.NotFound)
+                        {
+                            text += $"{words[i]} не найден";
+                        }
+                        else
+                        {
+                            text += $"{client.Client!.Name}\n{client.Client!.Address}"; 
+                        }
                         if(i + 1 < words.Length)
                             text += "\n\n";
                     }
+                    if(words.Length == 1)
+                        text = "Вы не ввели ни одного ИНН";
                     await botClient.SendTextMessageAsync(message.Chat, text);
                 }
                 else
