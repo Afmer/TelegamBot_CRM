@@ -1,7 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
-
+namespace TelegramBot_CRM;
 public class TelegramBot
 {
     private readonly ITelegramBotClient bot;
