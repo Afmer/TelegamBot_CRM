@@ -46,7 +46,7 @@ public class TelegramBot
                 var words = message.Text.Split(' ');
                 if(words[0] == "/start")
                 {
-                    await botClient.SendTextMessageAsync(message.Chat, "Инициализация пройдена");
+                    await botClient.SendTextMessageAsync(message.Chat, "Приветствую вас! Напишите /help для более подробной информации о моих возможностях");
                 }
                 else if(words[0] == "/inn")
                 {
